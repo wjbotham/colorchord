@@ -27,7 +27,27 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 self.shoot(event.pos)
             elif event.type == pygame.KEYDOWN:
-                print(event)
+                if event.key == 119:   # W
+                    self.player.w_down = True
+                elif event.key == 97:  # A
+                    self.player.a_down = True
+                elif event.key == 115: # S
+                    self.player.s_down = True
+                elif event.key == 100: # D
+                    self.player.d_down = True
+                else:
+                    print(event)
+            elif event.type == pygame.KEYUP:
+                if event.key == 119:   # W
+                    self.player.w_down = False
+                elif event.key == 97:  # A
+                    self.player.a_down = False
+                elif event.key == 115: # S
+                    self.player.s_down = False
+                elif event.key == 100: # D
+                    self.player.d_down = False
+                else:
+                    print(event)
             elif event.type == pygame.QUIT:
                 self.game_running = False
             #else:
@@ -35,11 +55,17 @@ class Game:
         self.quit()
 
     def shoot(self, pos):
-        self.bullets.append(Bullet(self.player.x, self.player.y, pos[0], pos[1]))
+        self.bullets.append(Bullet(self.player, pos[0], pos[1], 2, 30))
 
     def tick(self):
+        cleanup = []
         for bullet in self.bullets:
             bullet.tick()
+            if bullet.needs_cleanup:
+                cleanup.append(bullet)
+        self.player.tick()
+        for bullet in cleanup:
+            self.bullets.remove(bullet)
 
     def graphics_update_loop(self):
         seconds_per_frame = 1/30
@@ -56,6 +82,6 @@ class Game:
     def update(self):
         self.window.fill((0,0,0))
         for bullet in self.bullets:
-            pygame.draw.circle(self.window, (255,255,255), bullet.position, 2, 0)
+            pygame.draw.circle(self.window, (255,255,255), bullet.position, 0, 0)
         pygame.draw.circle(self.window, (255,0,0), self.player.position, 3, 0)
         pygame.display.flip()
