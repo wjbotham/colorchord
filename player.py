@@ -1,6 +1,8 @@
 from object import Object
 from math import sqrt
 
+DIAGONAL_VELOCITY = 0.5**0.5
+
 class Player(Object):
     def __init__(self, x, y, dx=0, dy=0):
         Object.__init__(self, x, y, dx, dy)
@@ -45,8 +47,8 @@ class Player(Object):
         if x_dir == 0 and y_dir == 0:
             None
         elif x_dir != 0 and y_dir != 0:
-            dx = x_dir * (1/sqrt(2))
-            dy = y_dir * (1/sqrt(2))
+            dx = x_dir * DIAGONAL_VELOCITY
+            dy = y_dir * DIAGONAL_VELOCITY
         elif x_dir != 0:
             dx = x_dir
             dy = 0
