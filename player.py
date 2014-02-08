@@ -1,5 +1,4 @@
 from object import Object
-from math import sqrt
 
 DIAGONAL_VELOCITY = 0.5**0.5
 
