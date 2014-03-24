@@ -1,8 +1,8 @@
 import pygame
 from threading import Thread
 from time import clock
-from bullet import Bullet
-from player import Player
+from core.bullet import Bullet
+from core.player import Player
 
 class Game:
     def __init__(self, width=500, height=500):

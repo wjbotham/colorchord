@@ -1,4 +1,4 @@
-from object import Object
+from core.object import Object
 
 class Bullet(Object):
     def __init__(self, source, target_x, target_y, speed, life):

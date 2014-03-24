@@ -1,4 +1,4 @@
-from object import Object
+from core.object import Object
 
 DIAGONAL_VELOCITY = 0.5**0.5
 
