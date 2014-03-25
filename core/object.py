@@ -1,10 +1,11 @@
 class Object:
-    def __init__(self, x, y, dx=0, dy=0, life=None):
+    def __init__(self, x, y, dx=0, dy=0, life=None, light=None):
         self.x = x
         self.y = y
         self.dx = dx
         self.dy = dy
         self.life = life
+        self.light = light
         self.needs_cleanup = False
 
     def get_life(self):
@@ -14,6 +15,9 @@ class Object:
         if life != None and self._life_remaining <= 0:
             self.needs_cleanup = True
     life = property(get_life, set_life)
+
+    def distance(self, other):
+        return ((self.x-other.x)**2 + (self.y-other.y)**2)**0.5
 
     def tick(self):
         self.x += self.dx
