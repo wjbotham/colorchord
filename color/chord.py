@@ -3,7 +3,6 @@ isInvalidNote = lambda note: note[0] <= 0 or note[1] < 0
 
 class Chord:
     def __init__(self, notes):
-        # TODO replace these with descriptive `raise` lines
         if not isinstance(notes, dict):
             raise Exception("Argument to Chord constructor must be a dict")
         if not len(notes.keys()) > 0:
