@@ -17,6 +17,11 @@ class Chord:
 
     def __mul__(self, other):
         return Chord({ k: other*v for k,v in self.notes.items() })
+    def __rmul__(self, other):
+        return self * other
+
+    def __truediv__(self, other):
+        return self * (1/other)
 
     def __add__(self, other):
         if other == 0:
@@ -30,7 +35,6 @@ class Chord:
             other_intensity = other.notes.get(freq) or 0
             notes[freq] = self_intensity + other_intensity
         return Chord(notes)
-
     def __radd__(self, other):
         return self + other
 

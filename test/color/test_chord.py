@@ -24,6 +24,12 @@ class TestChord(unittest.TestCase):
     def test_mult(self):
         a = Note(1) * 2
         self.assertEqual(a.notes[1], 2)
+        a = 3 * Note(2)
+        self.assertEqual(a.notes[2], 3)
+
+    def test_div(self):
+        a = Note(1) / 2
+        self.assertEqual(a.notes[1], 1/2)
 
     def test_repr(self):
         a = Note(5)
