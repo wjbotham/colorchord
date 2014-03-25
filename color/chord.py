@@ -33,6 +33,10 @@ class Chord:
         return self + other
     @staticmethod
     def sum(chords):
+        '''
+        Use Chord.sum instead of the built-in sum because it will be
+        significantly faster.
+        '''
         freqs = set(sum((chord.frequencies for chord in chords if chord != 0), []))
         if len(freqs) == 0:
             return 0
