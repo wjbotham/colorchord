@@ -3,6 +3,7 @@ from threading import Thread
 from time import clock
 from core.bullet import Bullet
 from core.player import Player
+from color.chord import Note
 
 class Game:
     def __init__(self, width=500, height=500):
@@ -55,7 +56,7 @@ class Game:
         self.quit()
 
     def shoot(self, pos):
-        self.bullets.append(Bullet(self.player, pos[0], pos[1], 2, 30))
+        self.bullets.append(Bullet(self.player, pos[0], pos[1], 1, 360))
 
     def tick(self):
         cleanup = []
@@ -81,7 +82,13 @@ class Game:
 
     def update(self):
         self.window.fill((0,0,0))
+        baseLight = Note(1) * 500000
         for bullet in self.bullets:
-            pygame.draw.circle(self.window, (255,255,255), bullet.position, 0, 0)
+            dist = self.player.distance(bullet)
+            if dist == 0:
+                light = 255
+            else:
+                light = min(255, (baseLight / (dist ** 2)).notes[1])
+            pygame.draw.circle(self.window, (light,light,light), bullet.position, 0, 0)
         pygame.draw.circle(self.window, (255,0,0), self.player.position, 3, 0)
         pygame.display.flip()
