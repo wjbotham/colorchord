@@ -1,5 +1,6 @@
 import unittest
 from color.chord import Note
+from color.chord import Chord
 
 class TestChord(unittest.TestCase):
     def test_add(self):
@@ -20,6 +21,24 @@ class TestChord(unittest.TestCase):
         self.assertEqual(a.notes[3], 1)
         a = Note(6) + Note(6) + Note(6)
         self.assertEqual(a.notes[6], 3)
+
+    def test_sum(self):
+        a = Chord.sum((Note(1), Note(2), Note(3)))
+        self.assertEqual(a.notes[1], 1)
+        self.assertEqual(a.notes[2], 1)
+        self.assertEqual(a.notes[3], 1)
+        a = Chord.sum([Note(1), Note(2), Note(3)])
+        self.assertEqual(a.notes[1], 1)
+        self.assertEqual(a.notes[2], 1)
+        self.assertEqual(a.notes[3], 1)
+        a = Chord.sum((Note(3), Note(2), Note(1), Note(2)))
+        self.assertEqual(a.notes[1], 1)
+        self.assertEqual(a.notes[2], 2)
+        self.assertEqual(a.notes[3], 1)
+        a = Chord.sum((Note(3), Note(2), Note(1), 0, Note(3)))
+        self.assertEqual(a.notes[1], 1)
+        self.assertEqual(a.notes[2], 1)
+        self.assertEqual(a.notes[3], 2)
 
     def test_mult(self):
         a = Note(1) * 2

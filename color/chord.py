@@ -28,15 +28,18 @@ class Chord:
             return self
         if not isinstance(other, Chord):
             return NotImplemented
-        freqs = set(self.frequencies + other.frequencies)
-        notes = {}
-        for freq in freqs:
-            self_intensity = self.notes.get(freq) or 0
-            other_intensity = other.notes.get(freq) or 0
-            notes[freq] = self_intensity + other_intensity
-        return Chord(notes)
+        return Chord.sum([self, other])
     def __radd__(self, other):
         return self + other
+    @staticmethod
+    def sum(chords):
+        freqs = set(sum((chord.frequencies for chord in chords if chord != 0), []))
+        if len(freqs) == 0:
+            return 0
+        notes = {}
+        for freq in freqs:
+            notes[freq] = sum(chord.notes.get(freq) or 0 for chord in chords if chord != 0)
+        return Chord(notes)
 
     def __repr__(self):
         noteReprs = []
@@ -59,3 +62,5 @@ class Chord:
 
 def Note(frequency):
     return Chord({ frequency: 1 })
+
+
