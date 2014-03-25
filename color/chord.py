@@ -1,12 +1,15 @@
 # note[0] is frequency, note[1] is intensity
-isValidNote = lambda note: note[0] > 0 and note[1] >= 0
+isInvalidNote = lambda note: note[0] <= 0 or note[1] < 0
 
 class Chord:
     def __init__(self, notes):
         # TODO replace these with descriptive `raise` lines
-        assert(isinstance(notes, dict))
-        assert(len(notes.keys()) > 0)
-        assert(all(map(isValidNote, notes.items())))
+        if not isinstance(notes, dict):
+            raise Exception("Argument to Chord constructor must be a dict")
+        if not len(notes.keys()) > 0:
+            raise Exception("Chord constructor arguments must include at least one note")
+        if any(map(isInvalidNote, notes.items())):
+            raise Exception("All notes of a Chord must have frequency > 0 and intensity >= 0")
         self.notes = { k:v for k,v in notes.items() if v > 0 }
 
     def get_frequencies(self):
